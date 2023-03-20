@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import { URL } from 'url';
+const httpsProxyAgent = require('https-proxy-agent');
 
 import {
   AxiosServerError,
@@ -8,19 +8,9 @@ import {
 
 export async function axiosRequest(options: AxiosRequestConfig): Promise<unknown> {
   try {
-    if (process.env.PROXY_SERVER_ADDR && !options.proxy) {
-      const proxyUrl = new URL(process.env.PROXY_SERVER_ADDR);
-      options.proxy = {
-        protocol: proxyUrl.protocol,
-        host: proxyUrl.host,
-        port: +proxyUrl.port,
-      }
-      if (proxyUrl.username) {
-        options.proxy.auth = {
-          username: proxyUrl.username,
-          password: proxyUrl.password,
-        }
-      }
+    if (process.env.PROXY_SERVER_ADDR) {
+      const httpsAgent = new httpsProxyAgent(process.env.PROXY_SERVER_ADDR);
+      options.httpsAgent = httpsAgent
     }
     const response = await axios(options);
     return response.data;
