@@ -105,7 +105,7 @@ export default class Private {
     this.host = host;
     this.apiKeyCredentials = apiKeyCredentials;
     this.networkId = networkId;
-    this.starkLib = new StarkwareLib({} as Provider, networkId);
+    this.starkLib = new StarkwareLib({} as any, networkId);
     if (starkPrivateKey) {
       this.starkKeyPair = asSimpleKeyPair(asEcKeyPair(starkPrivateKey));
     }

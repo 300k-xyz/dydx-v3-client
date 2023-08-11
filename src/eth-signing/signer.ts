@@ -71,17 +71,17 @@ export abstract class Signer {
         rpcData = data;
         break;
       case SigningMethod.MetaMask:
-        sendAsync = promisify(provider.sendAsync).bind(provider);
+        sendAsync = promisify(provider.sendAsync).bind(provider) as any;
         rpcMethod = 'eth_signTypedData_v3';
         rpcData = JSON.stringify(data);
         break;
       case SigningMethod.MetaMaskLatest:
-        sendAsync = promisify(provider.sendAsync).bind(provider);
+        sendAsync = promisify(provider.sendAsync).bind(provider)  as any;
         rpcMethod = 'eth_signTypedData_v4';
         rpcData = JSON.stringify(data);
         break;
       case SigningMethod.CoinbaseWallet:
-        sendAsync = promisify(provider.sendAsync).bind(provider);
+        sendAsync = promisify(provider.sendAsync).bind(provider)  as any;
         rpcMethod = 'eth_signTypedData_v4';
         rpcData = data;
         break;
@@ -120,7 +120,7 @@ export abstract class Signer {
 
     const sendAsync: (param: JsonRpcPayload) => Promise<JsonRpcResponse> = (
       promisify(provider.sendAsync || provider.send).bind(provider)
-    );
+    ) as any;
     const rpcMethod = 'personal_sign';
 
     const response = await sendAsync({

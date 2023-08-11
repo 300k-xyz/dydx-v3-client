@@ -144,7 +144,7 @@ export class DydxClient {
     if (!this._eth) {
       if (this.web3) {
         this._eth = new StarkwareLib(
-          this.web3.currentProvider,
+          this.web3.currentProvider as any,
           this.networkId,
           this.ethSendOptions,
         );
